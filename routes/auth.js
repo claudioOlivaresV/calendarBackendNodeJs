@@ -6,6 +6,7 @@ const {
 } = require("../controllers/auht");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
+const { validatJWT } = require("../middlewares/validar-jwt");
 const router = express.Router();
 
 router.post(
@@ -23,7 +24,7 @@ router.post(
   crearUsuario,
 );
 router.post(
-  "/",
+  "/login",
   [
     check("email", "EL email es obligatorio").isEmail(),
     check("password", "EL pasword es obligatorio y de 6 carqacteres").isLength({
@@ -33,6 +34,6 @@ router.post(
   ],
   loginUsuario,
 );
-router.get("/renew", revalidarToken);
+router.get("/renew", validatJWT, revalidarToken);
 
 module.exports = router;
