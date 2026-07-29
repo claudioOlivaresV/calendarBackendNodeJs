@@ -2,6 +2,8 @@ const express = require("express");
 const { dbConnection } = require("./database/config");
 require("dotenv").config();
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger/swagger");
 //crear el servidor de express
 
 const app = express();
@@ -16,7 +18,7 @@ app.use(cors());
 
 //directorio publico
 app.use(express.static("public"));
-
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //lectura y parseo body
 
 app.use(express.json());
